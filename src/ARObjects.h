@@ -43,6 +43,7 @@ namespace ARObjects {
         }
     }ARObject;
     
+#ifdef AR_FACE_TRACKING
     //! The base class to build a Face geometry
     typedef struct {
         
@@ -75,13 +76,7 @@ namespace ARObjects {
         
     }FaceAnchorObject;
     
-    //! joined camera matrices as one object.
-    typedef struct {
-        mat4 cameraTransform;
-        mat4 cameraProjection;
-        mat4 cameraView;
-    }ARCameraMatrices;
-    
+#endif
     //! quickly constructs an standard ARObject 
     static inline ARObject buildARObject(ARAnchor * rawAnchor,ofMatrix4x4 modelMatrix,bool systemAdded=false){
         ARObject obj;

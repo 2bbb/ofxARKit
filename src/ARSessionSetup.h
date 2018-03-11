@@ -80,7 +80,7 @@ namespace ARCore {
         
         auto state = format.getState();
         
-        
+#ifdef AR_FACE_TRACKING
         // first check if we want face tracking and if it's supported.
         // Currently unknown if this affects other possible tracking implementations since
         // it has it's own configuration type.
@@ -111,6 +111,7 @@ namespace ARCore {
                 NSLog(@"Unable to use face tracking configuration, defaulting to a more standard config.");
             }
         }
+#endif
         
         
         // if face tracking is not available, should pass through to here where we

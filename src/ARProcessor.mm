@@ -6,7 +6,7 @@
 //
 
 #include "ARProcessor.h"
-using namespace ARUtils;
+using namespace ARCommon;
 using namespace ARCore;
 
 ARProcessor::ARProcessor(ARSession * session){
@@ -79,15 +79,15 @@ void ARProcessor::setARCameraMatrices(){
     camera->setARCameraMatrices();
 }
 
-vec3 ARProcessor::getCameraPosition(){
-    return ARUtils::getAnchorXYZ(camera->getTransformMatrix());
+ofVec3f ARProcessor::getCameraPosition(){
+    return ARCommon::getAnchorXYZ(camera->getTransformMatrix());
 }
 
 ofTexture ARProcessor::getCameraTexture(){
    return camera->getCameraTexture();
 }
 
-ARObjects::ARCameraMatrices ARProcessor::getCameraMatrices(){
+ARCommon::ARCameraMatrices ARProcessor::getCameraMatrices(){
      return camera->getCameraMatrices();
 }
 
@@ -121,10 +121,10 @@ void ARProcessor::addAnchor(float zZoom){
     anchorController->addAnchor(zZoom);
 }
 
-void ARProcessor::addAnchor(vec3 position){
+void ARProcessor::addAnchor(ofVec3f position){
     auto matrices = getCameraMatrices();
  
-    mat4 model = toMat4(session.currentFrame.camera.transform);
+    ofMatrix4x4 model = toMat4(session.currentFrame.camera.transform);
     anchorController->addAnchor(position,matrices.cameraProjection,model * getCameraMatrices().cameraView);
 }
 
@@ -132,10 +132,12 @@ void ARProcessor::drawHorizontalPlanes(){
     anchorController->drawPlanes(camera->getCameraMatrices());
 }
 
+#ifdef AR_FACE_TRACKING
 // ======= FACE API ========= //
 void ARProcessor::updateFaces(){
     anchorController->updateFaces();
 }
+#endif
 
 // ======== DEBUG API =========== //
 

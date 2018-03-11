@@ -6,7 +6,7 @@
 
 #include "ARAnchorManager.h"
 using namespace std;
-using namespace ARUtils;
+using namespace ARCommon;
 
 namespace ARCore {
     
@@ -57,11 +57,11 @@ namespace ARCore {
     
     // TODO this still needs a bit of work but it's good enough for the time being.
     // Note that z position should still be considered in meters(anyone know of what ARKit defines as 1 meter by chance?)
-    void ARAnchorManager::addAnchor(vec3 position,mat4 projection,mat4 viewMatrix){
+    void ARAnchorManager::addAnchor(ofVec3f position,ofMatrix4x4 projection,ofMatrix4x4 viewMatrix){
         
         if(session.currentFrame){
            
-            ofVec4f pos = ARUtils::screenToWorld(position, projection, viewMatrix);
+            ofVec4f pos = ARCommon::screenToWorld(position, projection, viewMatrix);
            
             // build matrix for the anchor
             matrix_float4x4 translation = matrix_identity_float4x4;
@@ -143,9 +143,9 @@ namespace ARCore {
                     ARPlaneAnchor* pa = (ARPlaneAnchor*) anchor;
                     
                     // calc values from anchor.
-                    mat4 paTransform = convert<matrix_float4x4, mat4>(pa.transform);
-                    vec3 center = convert<vector_float3,vec3>(pa.center);
-                    vec3 extent = convert<vector_float3,vec3>(pa.extent);
+                    ofMatrix4x4 paTransform = convert<matrix_float4x4, ofMatrix4x4>(pa.transform);
+                    ofVec3f center = convert<vector_float3,ofVec3f>(pa.center);
+                    ofVec3f extent = convert<vector_float3,ofVec3f>(pa.extent);
                     
                     
                     // neat trick to search in vector with c++ 11, seems to work better than for loop
@@ -197,6 +197,7 @@ namespace ARCore {
         }
     }
     
+#ifdef AR_FACE_TRACKING
     void ARAnchorManager::updateFaces(){
         for (NSInteger index = 0; index < anchorInstanceCount; index++) {
             ARAnchor *anchor = session.currentFrame.anchors[index];
@@ -225,8 +226,8 @@ namespace ARCore {
                         vector_float2 uv = geo.textureCoordinates[i];
                         
                         
-                        face.vertices.push_back(convert<vector_float3, vec3>(vert));
-                        face.uvs.push_back(convert<vector_float2, vec2>(uv));
+                        face.vertices.push_back(convert<vector_float3, ofVec3f>(vert));
+                        face.uvs.push_back(convert<vector_float2, ofVec2f>(uv));
                     }
                     
                     // set indices
@@ -257,8 +258,8 @@ namespace ARCore {
                         vector_float2 uv = geo.textureCoordinates[i];
                         
                         
-                        faces[index].vertices.push_back(convert<vector_float3, vec3>(vert));
-                        faces[index].uvs.push_back(convert<vector_float2, vec2>(uv));
+                        faces[index].vertices.push_back(convert<vector_float3, ofVec3f>(vert));
+                        faces[index].uvs.push_back(convert<vector_float2, ofVec2f>(uv));
                     }
                     
                     // set indices
@@ -273,6 +274,7 @@ namespace ARCore {
             }
         }
     }
+#endif
     
     void ARAnchorManager::setNumberOfPlanesToTrack(int num){
         maxTrackedPlanes = num;
