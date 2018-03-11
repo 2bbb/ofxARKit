@@ -107,13 +107,14 @@ namespace ARCore {
     }
 
     void ARCameraView::draw(int x,int y,float width,float height){
-        if(x != 0 || y != 0){
-            if (mUseFbo){
-                drawScaled(x,y,width,height);
-            }
+        
+        // provides a way to pass through into FBO drawing so you don't have to remember two different
+        // functions.
+        if(mUseFbo){
+            drawScaled(x,y,width,height);
         }else{
         
-            
+            // if we're not using the fbo, then just draw with the vbo.
             cameraConvertShader.begin();
             vMesh.draw(GL_TRIANGLE_STRIP, 0, 16);
             cameraConvertShader.end();
@@ -124,6 +125,63 @@ namespace ARCore {
     }
     
     void ARCameraView::drawScaled(int x,int y,float width,float height){
+        
+        // if parameter values are 0 - use the values that might have been
+        // set with one of the other setter functions.
+        
+        if(x == 0){
+            x = xShift;
+        }
+        
+        if(y == 0){
+            y = yShift;
+        }
+        
+        if(width == 0){
+            width = cameraScaledSize.getWidth();
+        }
+        
+        if(height == 0){
+            height = cameraScaledSize.getHeight();
+        }
+        
+        
+        // Adjust drawing as necessary .
+        switch(UIDevice.currentDevice.orientation){
+            case UIDeviceOrientationFaceUp:
+                
+                if(deviceOrientation == UIDeviceOrientationLandscapeLeft ||
+                   deviceOrientation == UIDeviceOrientationLandscapeRight){
+                    cameraFbo.draw(xShift,yShift,cameraScaledSize.getWidth(),cameraScaledSize.getHeight());
+                }else{
+                    cameraFbo.draw(xShift,yShift,cameraScaledSize.getHeight(),cameraScaledSize.getWidth());
+                }
+                break;
+                
+            case UIDeviceOrientationFaceDown:
+                break;
+                
+            case UIDeviceOrientationUnknown:
+              cameraFbo.draw(xShift,yShift,cameraScaledSize.getHeight(),cameraScaledSize.getWidth());
+                
+                break;
+            case UIDeviceOrientationPortraitUpsideDown:
+           cameraFbo.draw(xShift,yShift,cameraScaledSize.getHeight(),cameraScaledSize.getWidth());
+                break;
+                
+            case UIDeviceOrientationPortrait:
+              cameraFbo.draw(xShift,yShift,cameraScaledSize.getHeight(),cameraScaledSize.getWidth());
+                break;
+                
+            case UIDeviceOrientationLandscapeLeft:
+           cameraFbo.draw(xShift,yShift,cameraScaledSize.getWidth(),cameraScaledSize.getHeight());
+                
+                break;
+                
+            case UIDeviceOrientationLandscapeRight:
+             cameraFbo.draw(xShift,yShift,cameraScaledSize.getWidth(),cameraScaledSize.getHeight());
+                break;
+        }
         
     }
 
@@ -180,6 +238,30 @@ namespace ARCore {
     
 
     // ============== PRIVATE ================= //
+    void ARCameraView::calculateCameraImageFraming(){
+        
+        // try to fit the camera capture width within the device's viewport.
+        // default capture dimensions seem to be 1280x720 regardless of device and orientation.
+        cameraScaledSize = ofRectangle(0,0,mCameraFrameDimensions.x,mCameraFrameDimensions.y);
+        
+        ofRectangle screen;
+        
+        // this appears to fix inconsistancies in the image that occur in the difference in
+        // startup orientation.
+        if(UIDevice.currentDevice.orientation == UIDeviceOrientationPortrait){
+            screen = ofRectangle(0,0,ofGetWindowWidth(),ofGetWindowHeight());
+        }else{
+            screen = ofRectangle(0,0,ofGetWindowHeight(),ofGetWindowWidth());
+        }
+        
+        cameraScaledSize.scaleTo(screen,OF_ASPECT_RATIO_KEEP);
+        
+        // scale up rectangle based on aspect ratio of scaled capture dimensions.
+        auto scaleVal = [[UIScreen mainScreen] scale];
+        
+        cameraScaledSize.scaleFromCenter(scaleVal);
+    }
+    
     
     void ARCameraView::updateFBO(){
         if(mUseFbo){
@@ -195,7 +277,6 @@ namespace ARCore {
                     break;
                     
                 case UIDeviceOrientationUnknown:
-                    
                     cameraConvertShader.setUniform1i("isPortraitOrientation", true);
                     break;
                 case UIDeviceOrientationPortraitUpsideDown:

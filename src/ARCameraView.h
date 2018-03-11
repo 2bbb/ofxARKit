@@ -30,7 +30,7 @@ namespace ARCore {
         //! your device's capabilities. 
         vec2 mCameraFrameDimensions;
 
-        //! The calculated viewport dimensions for a device. Primarily for iPads
+        //! The calculated viewport dimensions for a device. Primarily necessary for iPads
         vec2 mViewportDimensions;
         
         //! Normal resolution of the device as defined by ofGetWindowWidth / ofGetWindowHeight()
@@ -51,9 +51,15 @@ namespace ARCore {
         //! Rotation matrix for tweaking the camera to the correct orientaiton.
         mat4 cameraRotation;
         
+        // ============== IMAGE SCALING RELATED =================== //
+        
+        //! Contains the calculated image scaling for the device.
+        ofRectangle cameraScaledSize;
+        
         //! Fbo for rendering scaled versions of the camera image and/or for doing
         //! things with the camera feed.
         ofFbo cameraFbo;
+        
 
         // ============= VIDEO / CAMERA / TRACKING RELATED ================ //
         CVOpenGLESTextureRef yTexture;
@@ -104,6 +110,10 @@ namespace ARCore {
         };
         
         // ============== PRIVATE FUNCTIONS ============ // 
+        
+        //! Attempts to calculate proper values in how the camera image is rendered.
+        //! Used only for iPads - iPhones appear to be mostly immune to any scaling issues. 
+        void calculateCameraImageFraming();
         
         //! Builds FBO so you can use camera feed for other purposes
         //! or to scale the feed to better fit your device.
