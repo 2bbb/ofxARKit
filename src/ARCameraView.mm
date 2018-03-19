@@ -235,4 +235,27 @@ namespace ARCore {
         mViewportDimensionss.x = cam.getWidth();
         mViewportDimensionss.y = cam.getHeight();
     }
+
+    void ARCamera::logTrackingState(){
+        
+        if(debugMode){ 
+            switch(trackingStateReason){
+                case ARTrackingStateReasonNone:
+                    ofLog(OF_LOG_NOTICE,"Tracking state is a-ok!");
+                    break;
+                    
+                case ARTrackingStateReasonInitializing:
+                    ofLog(OF_LOG_NOTICE,"Tracking is warming up and waiting for enough information to start tracking");
+                    break;
+                    
+                case ARTrackingStateReasonExcessiveMotion:
+                    ofLog(OF_LOG_ERROR,"There is excessive motion at the moment, tracking is affected.");
+                    break;
+                    
+                case ARTrackingStateReasonInsufficientFeatures:
+                    ofLog(OF_LOG_ERROR,"There are not enough features found to enable tracking");
+                    break;
+            }
+        }
+    }
 }

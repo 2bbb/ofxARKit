@@ -113,13 +113,28 @@ namespace ARCore {
         public:
             ARCameraView(ARSession * session,bool mUseFbo=false);
 
+            static ARCameraViewRef create(ARSession * session, bool mUseFbo=false){
+                return ARCameraViewRef(new ARCameraView(session,mUseFbo));
+            }
+
+            //! Update camera information and other data coming in from ARKit
             void update();
+
+            //! Draw the camera image
             void draw();
+
+            //! Draws a scaled version of the camera image. 
             void drawScaled(int x=0,int y=0,float width=0.0f,float height=0.0f);
+
+            //! Sets the x/y coordinates of where to draw the camera image when using a FBO
             void setCameraImagePosition(int xShift,int yShift);
 
             //! Update the device's interface orientation settings based on the current
             //! based on the current device's actual rotation. 
             void updateInterfaceOrientation();
+            
+            //! Logs the current tracking state of ARKit. 
+            void logTrackingState();
+
     }
 }
