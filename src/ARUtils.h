@@ -18,12 +18,6 @@ typedef ofVec2f vec2;
 
 namespace ARUtils {
     
-    //! joined camera matrices as one object.
-    typedef struct {
-        mat4 cameraTransform;
-        mat4 cameraProjection;
-        mat4 cameraView;
-    }ARCameraMatrices;
     
     //! borrowed from https://github.com/wdlindmeier/Cinder-Metal/blob/master/include/MetalHelpers.hpp
     //! helpful converting to and from SIMD
@@ -37,7 +31,7 @@ namespace ARUtils {
     }
     
     //! convert to oF mat4
-    static const mat4 static inline toMat4( const matrix_float4x4& mat ) {
+    inline static const mat4 toMat4( const matrix_float4x4& mat ) {
         return convert<matrix_float4x4, mat4>(mat);
     }
     

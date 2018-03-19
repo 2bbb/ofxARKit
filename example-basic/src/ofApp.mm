@@ -81,7 +81,7 @@ void ofApp::draw() {
                 // Not important for this example but something good to remember.
                 
                 ofPushMatrix();
-                ofMatrix4x4 mat = ARCommon::convert<matrix_float4x4, ofMatrix4x4>(anchor.transform);
+                ofMatrix4x4 mat = ARUtils::convert<matrix_float4x4, ofMatrix4x4>(anchor.transform);
                 ofMultMatrix(mat);
                 
                 ofSetColor(255);

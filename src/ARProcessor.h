@@ -19,7 +19,10 @@
 #include "ARDebugUtils.h"
 #include "ARCam.h"
 #include "ARSessionSetup.h"
+#include "ARObjects.h"
 
+typedef ofMatrix4x4 mat4;
+typedef ofVec3f vec3;
 typedef std::shared_ptr<class ARProcessor>ARRef;
 
 //! An API class for doing things in ARKit. Consider this the kitchen sink of everything,
@@ -96,7 +99,7 @@ public:
     void addAnchor(float zZoom=-0.2);
     
     //! Adds an anchor at a specified position. Note that z value is up to you to set.
-    void addAnchor(ofVec3f position);
+    void addAnchor(vec3 position);
     //======== PLANE API ============ //
 
     //! Returns the current set of horizontal planes.
@@ -134,32 +137,32 @@ public:
     float getLightIntensity();
     
     //! Returns the camera's current transform matrix as a vec3.
-    ofVec3f getCameraPosition();
+    vec3 getCameraPosition();
     
     //! Helper to quickly set up ARKit projection and view matrices for 2D drawing in oF
     void setARCameraMatrices();
     
     //! Returns Projection and View matrices for the specified orientation.
-    ARCommon::ARCameraMatrices getMatricesForOrientation(UIInterfaceOrientation orientation=UIInterfaceOrientationPortrait, float near=0.01,float far=1000.0);
+    ARObjects::ARCameraMatrices getMatricesForOrientation(UIInterfaceOrientation orientation=UIInterfaceOrientationPortrait, float near=0.01,float far=1000.0);
     
     //! Return the camera image as a texture.
     ofTexture getCameraTexture();
     
     //! Get the camera matrix set
-    ARCommon::ARCameraMatrices getCameraMatrices();
+    ARObjects::ARCameraMatrices getCameraMatrices();
     
     // returns the current projection matrix from the camera
-    ofMatrix4x4 getProjectionMatrix(){
+    mat4 getProjectionMatrix(){
         return camera->getProjectionMatrix();
     }
     
     //! returns the current view matrix from the camera
-    ofMatrix4x4 getViewMatrix(){
+    mat4 getViewMatrix(){
         return camera->getViewMatrix();
     }
     
     //! Returns the camera's current transform matrix.
-    ofMatrix4x4 getCameraTransformMatrix(){
+    mat4 getCameraTransformMatrix(){
         return camera->getTransformMatrix();
     }
     

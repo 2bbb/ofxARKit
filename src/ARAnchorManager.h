@@ -15,6 +15,8 @@
 #include "ARObjects.h"
 using namespace ARObjects;
 
+typedef ofVec3f vec3;
+typedef ofMatrix4x4 mat4;
 
 /**
  Basic helper class to help with managing anchors.
@@ -32,8 +34,10 @@ namespace ARCore {
         //! reference to all currently found or added regular anchors
         std::vector<ARObject> anchors;
         
+#ifdef AR_FACE_TRACKING
         //! Reference to all currently found faces
         std::vector<FaceAnchorObject> faces;
+#endif
         
         //! The number of anchors currently found
         NSInteger anchorInstanceCount;
@@ -61,7 +65,7 @@ namespace ARCore {
         void addAnchor(float zZoom=-0.2);
         
         //! adds an anchor at the specified position.
-        void addAnchor(ofVec3f position,ofMatrix4x4 projection,ofMatrix4x4 viewMatrix);
+        void addAnchor(vec3 position,mat4 projection,mat4 viewMatrix);
         
         //! adds an ARObject to be tracked by ARKit.
         void addAnchor(ARObject anchor);
@@ -139,7 +143,7 @@ namespace ARCore {
         int getNumPlanes();
         
         //! Draws all currently found planes.
-        void drawPlanes(ARCommon::ARCameraMatrices cameraMatrices);
+        void drawPlanes(ARObjects::ARCameraMatrices cameraMatrices);
         
         //! general update function, currently increments the counter to keep track of the number of system + user anchors.
         void update();
@@ -147,11 +151,13 @@ namespace ARCore {
         //! update function for dealing with planes.
         void updatePlanes();
         
+#ifdef AR_FACE_TRACKING
         //! updates face tracking info
         void updateFaces();
+#endif
         
         //! draw a specific plane
-        void drawPlaneAt(ARCommon::ARCameraMatrices cameraMatrices,int index=0);
+        void drawPlaneAt(ARObjects::ARCameraMatrices cameraMatrices,int index=0);
         
         //! Allows you to set a callback function to run when a new plane is added.
         //! Returns the reference to that plane. 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		088AF422204C1CFC007EA7A5 /* ARCameraView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 088AF421204C1CFC007EA7A5 /* ARCameraView.mm */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -55,6 +56,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		088AF420204C1CFC007EA7A5 /* ARCameraView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARCameraView.h; path = ../src/ARCameraView.h; sourceTree = "<group>"; };
+		088AF421204C1CFC007EA7A5 /* ARCameraView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ARCameraView.mm; path = ../src/ARCameraView.mm; sourceTree = "<group>"; };
+		088AF423204C2330007EA7A5 /* ARObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ARObjects.h; path = ../src/ARObjects.h; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* example-basic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "example-basic.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -192,7 +196,10 @@
 				B02A0FB91F49D298002A69F3 /* ARAnchorManager.mm */,
 				B07F9A3A1F561C650031FC25 /* ARCam.h */,
 				B07F9A3B1F561C650031FC25 /* ARCam.mm */,
+				088AF420204C1CFC007EA7A5 /* ARCameraView.h */,
+				088AF421204C1CFC007EA7A5 /* ARCameraView.mm */,
 				B0B6C0251F6B744E00850C0E /* ARSessionSetup.h */,
+				088AF423204C2330007EA7A5 /* ARObjects.h */,
 				B02A0FBF1F49D2D1002A69F3 /* ARDebugUtils.h */,
 				B02A0FBB1F49D298002A69F3 /* ARProcessor.h */,
 				B02A0FBC1F49D298002A69F3 /* ARProcessor.mm */,
@@ -408,6 +415,7 @@
 				B00AF4FD1F44D5180082DDF8 /* MyAppViewController.mm in Sources */,
 				B07F9A3C1F561C650031FC25 /* ARCam.mm in Sources */,
 				B00AF4FE1F44D5180082DDF8 /* OFAppViewController.mm in Sources */,
+				088AF422204C1CFC007EA7A5 /* ARCameraView.mm in Sources */,
 				E4D8936E11527B74007E1F53 /* main.mm in Sources */,
 				E4D8936F11527B74007E1F53 /* ofApp.mm in Sources */,
 			);
