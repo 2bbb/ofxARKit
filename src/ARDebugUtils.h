@@ -15,13 +15,10 @@
 
 #define STRINGIFY(A) #A
 
-
 #ifdef OF_TARGET_IPHONE
 #include "ofMain.h"
 #endif
 
-typedef ofMatrix4x4 mat4;
-typedef ofVec3f vec3;
 namespace ARDebugUtils {
     
     class ARDebugInfo {
@@ -75,7 +72,6 @@ namespace ARDebugUtils {
         }
     };
     
-    
     //! Helper class for recognizing features and drawing the resulting point cloud.
 
     class PointCloudDebug {
@@ -115,7 +111,7 @@ namespace ARDebugUtils {
         // this method is for getting feature points once and only once
         // useful for building up a mesh overtime without getting tons of duplicates
         // these are unique points found since the start of the ar session
-        vector<vec3> getPoints(ARFrame * currentFrame){
+        vector<ofVec3f> getPoints(ARFrame * currentFrame){
             pointCloud = currentFrame.rawFeaturePoints;
             pointCount = pointCloud.count;
             
@@ -136,7 +132,7 @@ namespace ARDebugUtils {
                                 std::inserter(difference, difference.end()));
             
             //if there is anything new put it in newpoints
-            vector<vec3> newPoints;
+            vector<ofVec3f> newPoints;
             newPoints.clear();
             
             for(auto d = difference.begin(); d != difference.end(); d++){
@@ -144,7 +140,7 @@ namespace ARDebugUtils {
                     
                     if(*d == pointCloud.identifiers[i]){
                         vector_float3 p = pointCloud.points[i];
-                        vec3 v3 = vec3(p.x, p.y, p.z);
+                        ofVec3f v3 = ofVec3f(p.x, p.y, p.z);
                         newPoints.push_back(v3);
                     }
                 }
@@ -153,15 +149,15 @@ namespace ARDebugUtils {
         }
         
         // this method is for getting just the current frames points
-        vector<vec3> getCurrentPoints(ARFrame * currentFrame){
+        vector<ofVec3f> getCurrentPoints(ARFrame * currentFrame){
             pointCloud = currentFrame.rawFeaturePoints;
             pointCount = pointCloud.count;
             
-            vector<vec3> points;
+            vector<ofVec3f> points;
             
             for(int i = 0; i<pointCount; i++){
                 vector_float3 point =  pointCloud.points[i];
-                vec3 v = vec3(point.x, point.y, point.z);
+                ofVec3f v = ofVec3f(point.x, point.y, point.z);
                 points.push_back(v);
             }
             
@@ -198,7 +194,7 @@ namespace ARDebugUtils {
 
         
         //! draws the resulting point cloud - pass in a projection and view matrix(usually from ARKit)
-        void draw(mat4 projectionMatrix,mat4 modelViewMatrix){
+        void draw(ofMatrix4x4 projectionMatrix,ofMatrix4x4 modelViewMatrix){
     
             pointShader.begin();
             pointShader.setUniformMatrix4f("projectionMatrix", projectionMatrix);

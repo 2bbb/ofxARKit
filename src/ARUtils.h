@@ -10,6 +10,7 @@
 
 #define STRINGIFY(A) #A
 #include "ofMain.h"
+#include "ARFaceTrackingBool.h"
 
 //Prepare for move to glm
 typedef ofMatrix4x4 mat4;
