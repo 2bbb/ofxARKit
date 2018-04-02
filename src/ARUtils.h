@@ -235,6 +235,48 @@ namespace ARUtils {
         
         return CameraXYZ * inverseCamera;
     }
+
+    /**
+     *  Returns a UIInterfaceOrientation object based on the current device orientation. 
+     */
+    static UIInterfaceOrientation getInterfaceOrientationFromDeviceOrientation(){
+        UIInterfaceOrientation orientation;
+        switch(UIDevice.currentDevice.orientation){
+            case UIDeviceOrientationFaceUp:
+                orientation = UIInterfaceOrientationPortrait;
+                break;
+
+            case UIDeviceOrientationFaceDown:
+                orientation = UIInterfaceOrientationPortrait;
+                break;
+
+            case UIInterfaceOrientationUnknown:
+                orientation = UIInterfaceOrientationPortrait;
+                break;
+            case UIInterfaceOrientationPortraitUpsideDown:
+                orientation = UIInterfaceOrientationPortrait;
+                break;
+
+            case UIDeviceOrientationPortrait:
+                orientation = UIInterfaceOrientationPortrait;
+
+                break;
+
+                // for the next two cases - I know it's opposite land - but trust me it works :p
+
+            case UIDeviceOrientationLandscapeLeft:
+                orientation = UIInterfaceOrientationLandscapeRight;
+                break;
+
+
+            case UIDeviceOrientationLandscapeRight:
+                orientation = UIInterfaceOrientationLandscapeLeft;
+                break;
+        }
+
+        return orientation;
+
+    }
 }
 
 
